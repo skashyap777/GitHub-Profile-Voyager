@@ -306,7 +306,6 @@ function sortAndDisplayRepos() {
     
     displayRepositories(sorted);
 }
-
 function displayRepositories(repos) {
     const grid = document.getElementById('reposGrid');
     grid.innerHTML = '';
@@ -316,12 +315,21 @@ function displayRepositories(repos) {
         grid.appendChild(card);
     });
     
+    // Add click handlers for repo cards
+    document.querySelectorAll('.repo-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('a')) {
+                const link = card.querySelector('a[href*="github.com"]');
+                if (link) window.open(link.href, '_blank');
+            }
+        });
+    });
+    
     feather.replace();
 }
-
 function createRepoCard(repo, index) {
     const div = document.createElement('div');
-    div.className = 'repo-card p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1 group';
+    div.className = 'repo-card p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1 group cursor-pointer';
     div.style.animationDelay = `${index * 50}ms`;
     
     const updatedDate = new Date(repo.updated_at).toLocaleDateString('en-US', {
@@ -331,54 +339,80 @@ function createRepoCard(repo, index) {
     });
     
     const languageColors = {
-        JavaScript: 'bg-yellow-400',
-        TypeScript: 'bg-blue-400',
-        Python: 'bg-green-400',
-        Java: 'bg-orange-400',
-        'C++': 'bg-pink-400',
-        Go: 'bg-cyan-400',
-        Rust: 'bg-orange-300',
-        Ruby: 'bg-red-400',
-        PHP: 'bg-purple-400'
+        JavaScript: '#f7df1e',
+        TypeScript: '#3178c6',
+        Python: '#3776ab',
+        Java: '#b07219',
+        'C++': '#f34b7d',
+        C: '#555555',
+        'C#': '#178600',
+        Go: '#00add8',
+        Rust: '#dea584',
+        Ruby: '#701516',
+        PHP: '#4F5D95',
+        Swift: '#ffac45',
+        Kotlin: '#A97BFF',
+        HTML: '#e34c26',
+        CSS: '#563d7c',
+        Shell: '#89e051',
+        Vue: '#41b883',
+        React: '#61dafb'
     };
     
-    const langColor = languageColors[repo.language] || 'bg-gray-400';
+    const langColor = languageColors[repo.language] || '#8b949e';
+    
+    // Calculate repo score (popularity metric)
+    const score = repo.stargazers_count + (repo.forks_count * 2);
+    let scoreBadge = '';
+    if (score > 1000) {
+        scoreBadge = '<span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full">🔥 Hot</span>';
+    } else if (score > 500) {
+        scoreBadge = '<span class="px-2 py-1 bg-primary-500/20 text-primary-400 text-xs rounded-full">⭐ Popular</span>';
+    }
     
     div.innerHTML = `
         <div class="flex items-start justify-between mb-4">
             <div class="flex items-center gap-3">
                 <i data-feather="book" class="w-5 h-5 text-primary-400"></i>
-                <h4 class="font-semibold text-lg truncate max-w-[200px]" title="${repo.name}">${repo.name}</h4>
+                <h4 class="font-semibold text-lg truncate max-w-[180px]" title="${repo.name}">${repo.name}</h4>
             </div>
-            ${repo.fork ? '<span class="px-2 py-1 text-xs bg-gray-800 text-gray-400 rounded-full">Fork</span>' : ''}
+            <div class="flex gap-2">
+                ${scoreBadge}
+                ${repo.archived ? '<span class="px-2 py-1 bg-gray-700 text-gray-400 text-xs rounded-full">Archived</span>' : ''}
+                ${repo.fork ? '<span class="px-2 py-1 text-xs bg-gray-800 text-gray-400 rounded-full">Fork</span>' : ''}
+            </div>
         </div>
         
         <p class="text-gray-400 text-sm mb-4 line-clamp-2 h-10">${repo.description || 'No description available'}</p>
         
-        <div class="flex items-center justify-between text-sm">
-            <div class="flex items-center gap-4">
-                ${repo.language ? `
-                    <span class="flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 rounded-full ${langColor}"></span>
-                        <span class="text-gray-400">${repo.language}</span>
-                    </span>
-                ` : ''}
-                <span class="flex items-center gap-1.5 text-amber-400">
-                    <i data-feather="star" class="w-4 h-4 star-icon"></i>
-                    <span>${formatNumber(repo.stargazers_count)}</span>
+        <div class="flex items-center gap-4 text-sm flex-wrap">
+            ${repo.language ? `
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${langColor}"></span>
+                    <span class="text-gray-400">${repo.language}</span>
                 </span>
-                ${repo.forks_count > 0 ? `
-                    <span class="flex items-center gap-1.5 text-gray-400">
-                        <i data-feather="git-branch" class="w-4 h-4"></i>
-                        <span>${formatNumber(repo.forks_count)}</span>
-                    </span>
-                ` : ''}
-            </div>
+            ` : ''}
+            <span class="flex items-center gap-1.5 text-amber-400">
+                <i data-feather="star" class="w-4 h-4 star-icon"></i>
+                <span>${formatNumber(repo.stargazers_count)}</span>
+            </span>
+            ${repo.forks_count > 0 ? `
+                <span class="flex items-center gap-1.5 text-gray-400">
+                    <i data-feather="git-branch" class="w-4 h-4"></i>
+                    <span>${formatNumber(repo.forks_count)}</span>
+                </span>
+            ` : ''}
+            ${repo.open_issues_count > 0 ? `
+                <span class="flex items-center gap-1.5 text-red-400" title="Open issues">
+                    <i data-feather="alert-circle" class="w-4 h-4"></i>
+                    <span>${formatNumber(repo.open_issues_count)}</span>
+                </span>
+            ` : ''}
         </div>
         
         <div class="mt-4 pt-4 border-t border-gray-800 flex items-center justify-between">
             <span class="text-xs text-gray-500">Updated ${updatedDate}</span>
-            <a href="${repo.html_url}" target="_blank" class="opacity-0 group-hover:opacity-100 transition-opacity px-3 py-1.5 bg-primary-600 hover:bg-primary-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5">
+            <a href="${repo.html_url}" target="_blank" onclick="event.stopPropagation()" class="opacity-0 group-hover:opacity-100 transition-opacity px-3 py-1.5 bg-primary-600 hover:bg-primary-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5">
                 View <i data-feather="arrow-up-right" class="w-3 h-3"></i>
             </a>
         </div>
@@ -387,6 +421,14 @@ function createRepoCard(repo, index) {
     return div;
 }
 
+// Add quick compare feature
+function quickCompare() {
+    if (!currentUser) return;
+    const username = prompt('Enter username to compare with:');
+    if (username) {
+        window.location.href = `compare.html?user1=${currentUser.login}&user2=${username}`;
+    }
+}
 function formatNumber(num) {
     if (num >= 1000000) {
         return (num / 1000000).toFixed(1) + 'M';

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore - GitHub Voyager</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc',
+                            400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1',
+                            800: '#075985', 900: '#0c4a6e', 950: '#082f49',
+                        },
+                        secondary: {
+                            50: '#fdf4ff', 100: '#fae8ff', 200: '#f5d0fe', 300: '#f0abfc',
+                            400: '#e879f9', 500: '#d946ef', 600: '#c026d3', 700: '#a21caf',
+                            800: '#86198f', 900: '#701a75', 950: '#4a044e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen transition-colors duration-300">
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <github-nav></github-nav>
+
+    <main class="relative z-10 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-secondary-400 to-primary-400 bg-clip-text text-transparent">
+                    Explore the Galaxy
+                </h1>
+                <p class="text-xl text-gray-400">Discover trending repositories and developers</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button id="tabTrending" class="px-6 py-3 rounded-xl font-medium transition-all bg-primary-600 text-white">
+                    <i data-feather="trending-up" class="w-4 h-4 inline mr-2"></i>Trending
+                </button>
+                <button id="tabAwesome" class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
+                    <i data-feather="star" class="w-4 h-4 inline mr-2"></i>Awesome Lists
+                </button>
+                <button id="tabDevelopers" class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
+                    <i data-feather="users" class="w-4 h-4 inline mr-2"></i>Top Developers
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div id="trendingFilters" class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors active" data-language="all">All</button>
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="javascript">JavaScript</button>
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="typescript">TypeScript</button>
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="python">Python</button>
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="rust">Rust</button>
+                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="go">Go</button>
+            </div>
+
+            <!-- Content -->
+            <div id="exploreContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Content injected by JS -->
+            </div>
+
+            <!-- Loading -->
+            <div id="exploreLoading" class="hidden text-center py-12">
+                <div class="relative w-20 h-20 mx-auto mb-4">
+                    <div class="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-t-primary-500 rounded-full animate-spin"></div>
+                </div>
+                <p class="text-gray-400">Discovering amazing repositories...</p>
+            </div>
+
+            <!-- Load More -->
+            <div id="exploreLoadMore" class="mt-8 text-center hidden">
+                <button id="loadMoreExplore" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-medium transition-all">
+                    Load More
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <github-footer></github-footer>
+
+    <script src="components/nav.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="explore.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>

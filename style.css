@@ -149,7 +149,6 @@ html {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
-
 /* Tooltip */
 .tooltip {
     position: relative;
@@ -179,6 +178,53 @@ html {
     transform: translateX(-50%) translateY(-4px);
 }
 
+/* Filter buttons active state */
+.filter-btn.active {
+    background: #0ea5e9 !important;
+    color: white !important;
+}
+
+/* Pulse animation for hot repos */
+@keyframes hot-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    50% { box-shadow: 0 0 20px 5px rgba(245, 158, 11, 0.2); }
+}
+
+.repo-card:has(.bg-amber-500\\/20) {
+    animation: hot-pulse 2s infinite;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* Contribution calendar grid */
+#contributionCalendar {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    gap: 2px;
+}
+
+/* Comparison page specific */
+.comparison-bar {
+    transition: width 1s ease-out;
+}
+
+/* Chart containers */
+canvas {
+    max-height: 300px;
+}
+
+/* Quick action buttons */
+.quick-action {
+    @apply px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-sm font-medium transition-colors flex items-center gap-2;
+}
+
+/* Streak indicator */
+.streak-indicator {
+    @apply flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium;
+}
+
+.streak-fire {
+    @apply bg-orange-500/20 text-orange-400 border border-orange-500/30;
+}
 /* Code Block Styling */
 .code-block {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
