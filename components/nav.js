@@ -77,27 +77,12 @@ class GithubNav extends HTMLElement {
                     color: white;
                 }
                 
-                .theme-toggle {
-                    width: 2.5rem;
-                    height: 2.5rem;
-                    border-radius: 0.75rem;
-                    background: rgba(30, 41, 59, 0.8);
-                    border: 1px solid rgba(51, 65, 85, 0.5);
-                    color: #94a3b8;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.2s;
-                }
-                
-                .theme-toggle:hover {
-                    background: rgba(51, 65, 85, 0.8);
-                    color: white;
-                }
-                
                 @media (max-width: 640px) {
                     .nav-links {
+                        display: flex;
+                        gap: 1rem;
+                    }
+                    .nav-link span {
                         display: none;
                     }
                 }
@@ -105,7 +90,7 @@ class GithubNav extends HTMLElement {
             
             <nav id="navbar">
                 <div class="nav-container">
-                    <a href="/" class="logo">
+                    <a href="index.html" class="logo">
                         <div class="logo-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -114,61 +99,47 @@ class GithubNav extends HTMLElement {
                         <span>GitHub Voyager</span>
                     </a>
                     <div class="nav-links">
-                        <a href="index.html" class="nav-link">
+                        <a href="index.html" class="nav-link" title="Home">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
-                            Home
+                            <span>Home</span>
                         </a>
-                        <a href="explore.html" class="nav-link">
+                        <a href="explore.html" class="nav-link" title="Explore">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                             </svg>
-                            Explore
+                            <span>Explore</span>
                         </a>
-                        <a href="compare.html" class="nav-link">
+                        <a href="compare.html" class="nav-link" title="Compare">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="18" y1="20" x2="18" y2="10"></line>
                                 <line x1="12" y1="20" x2="12" y2="4"></line>
                                 <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
-                            Compare
+                            <span>Compare</span>
                         </a>
-                        <a href="stats.html" class="nav-link">
+                        <a href="stats.html" class="nav-link" title="Stats">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="20" x2="12" y2="10"></line>
                                 <line x1="18" y1="20" x2="18" y2="4"></line>
                                 <line x1="6" y1="20" x2="6" y2="16"></line>
                             </svg>
-                            Stats
+                            <span>Stats</span>
                         </a>
-<button class="theme-toggle" id="themeToggle" title="Toggle theme">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </nav>
         `;
-        
+
         this.setupScrollEffect();
-        this.setupThemeToggle();
     }
-    
+
     setupScrollEffect() {
         const navbar = this.shadowRoot.getElementById('navbar');
-        
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
@@ -177,21 +148,8 @@ class GithubNav extends HTMLElement {
             }
         });
     }
-    
-    setupThemeToggle() {
-        const toggle = this.shadowRoot.getElementById('themeToggle');
-        const html = document.documentElement;
-        
-        toggle.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-            }
-        });
-    }
+
+
 }
 
 customElements.define('github-nav', GithubNav);

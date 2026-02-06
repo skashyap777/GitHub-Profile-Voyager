@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compare - GitHub Voyager</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
@@ -39,10 +39,12 @@
         }
     </script>
 </head>
+
 <body class="bg-gray-950 text-gray-100 min-h-screen transition-colors duration-300">
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse-slow"
+            style="animation-delay: 2s;"></div>
     </div>
 
     <github-nav></github-nav>
@@ -50,7 +52,8 @@
     <main class="relative z-10 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
-                <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-secondary-400 to-primary-400 bg-clip-text text-transparent">
+                <h1
+                    class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-secondary-400 to-primary-400 bg-clip-text text-transparent">
                     Developer Showdown
                 </h1>
                 <p class="text-xl text-gray-400">Compare GitHub profiles side by side</p>
@@ -59,22 +62,29 @@
             <!-- Search Inputs -->
             <div class="grid md:grid-cols-2 gap-6 mb-12">
                 <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500">
+                    </div>
                     <div class="relative flex items-center bg-gray-900 rounded-2xl border border-gray-800 p-2">
                         <i data-feather="user" class="w-6 h-6 text-gray-500 ml-4"></i>
-                        <input type="text" id="user1Input" placeholder="First username..." class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 px-4 py-3 text-lg">
+                        <input type="text" id="user1Input" placeholder="First username..."
+                            class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 px-4 py-3 text-lg">
                     </div>
                 </div>
                 <div class="relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500">
+                    </div>
                     <div class="relative flex items-center bg-gray-900 rounded-2xl border border-gray-800 p-2">
                         <i data-feather="user" class="w-6 h-6 text-gray-500 ml-4"></i>
-                        <input type="text" id="user2Input" placeholder="Second username..." class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 px-4 py-3 text-lg">
+                        <input type="text" id="user2Input" placeholder="Second username..."
+                            class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 px-4 py-3 text-lg">
                     </div>
                 </div>
             </div>
 
-            <button id="compareBtn" class="w-full max-w-md mx-auto block px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 mb-12">
+            <button id="compareBtn"
+                class="w-full max-w-md mx-auto block px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 text-white font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 mb-12">
                 <i data-feather="git-compare" class="w-6 h-6"></i>
                 <span>Compare Profiles</span>
             </button>
@@ -83,7 +93,9 @@
             <div id="compareLoading" class="hidden text-center py-12">
                 <div class="relative w-24 h-24 mx-auto mb-6">
                     <div class="absolute inset-0 border-4 border-primary-500/20 rounded-full"></div>
-                    <div class="absolute inset-0 border-4 border-t-primary-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                    <div
+                        class="absolute inset-0 border-4 border-t-primary-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin">
+                    </div>
                 </div>
                 <p class="text-xl text-gray-400 animate-pulse">Loading profiles...</p>
             </div>
@@ -93,12 +105,14 @@
                 <!-- VS Header -->
                 <div class="flex items-center justify-center gap-8 mb-12">
                     <div class="text-center">
-                        <img id="avatar1" src="" alt="" class="w-24 h-24 rounded-2xl mx-auto mb-3 border-2 border-primary-500">
+                        <img id="avatar1" src="" alt=""
+                            class="w-24 h-24 rounded-2xl mx-auto mb-3 border-2 border-primary-500">
                         <h3 id="name1" class="text-xl font-bold"></h3>
                     </div>
                     <div class="text-4xl font-black text-gray-600 italic">VS</div>
                     <div class="text-center">
-                        <img id="avatar2" src="" alt="" class="w-24 h-24 rounded-2xl mx-auto mb-3 border-2 border-secondary-500">
+                        <img id="avatar2" src="" alt=""
+                            class="w-24 h-24 rounded-2xl mx-auto mb-3 border-2 border-secondary-500">
                         <h3 id="name2" class="text-xl font-bold"></h3>
                     </div>
                 </div>
@@ -112,7 +126,8 @@
                 </div>
 
                 <!-- Winner Banner -->
-                <div id="winnerBanner" class="text-center py-8 rounded-3xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 hidden">
+                <div id="winnerBanner"
+                    class="text-center py-8 rounded-3xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 hidden">
                     <i data-feather="trophy" class="w-12 h-12 text-amber-400 mx-auto mb-3"></i>
                     <h3 id="winnerText" class="text-2xl font-bold text-amber-400"></h3>
                 </div>
@@ -135,4 +150,5 @@
     <script src="compare.js"></script>
     <script>feather.replace();</script>
 </body>
+
 </html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore - GitHub Voyager</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
@@ -37,10 +37,12 @@
         }
     </script>
 </head>
+
 <body class="bg-gray-950 text-gray-100 min-h-screen transition-colors duration-300">
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-500/10 rounded-full blur-3xl animate-pulse-slow"
+            style="animation-delay: 2s;"></div>
     </div>
 
     <github-nav></github-nav>
@@ -48,7 +50,8 @@
     <main class="relative z-10 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12">
-                <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-secondary-400 to-primary-400 bg-clip-text text-transparent">
+                <h1
+                    class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-secondary-400 to-primary-400 bg-clip-text text-transparent">
                     Explore the Galaxy
                 </h1>
                 <p class="text-xl text-gray-400">Discover trending repositories and developers</p>
@@ -56,25 +59,62 @@
 
             <!-- Tabs -->
             <div class="flex justify-center gap-4 mb-8">
-                <button id="tabTrending" class="px-6 py-3 rounded-xl font-medium transition-all bg-primary-600 text-white">
+                <button id="tabTrending"
+                    class="px-6 py-3 rounded-xl font-medium transition-all bg-primary-600 text-white">
                     <i data-feather="trending-up" class="w-4 h-4 inline mr-2"></i>Trending
                 </button>
-                <button id="tabAwesome" class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
+                <button id="tabAwesome"
+                    class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
                     <i data-feather="star" class="w-4 h-4 inline mr-2"></i>Awesome Lists
                 </button>
-                <button id="tabDevelopers" class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
+                <button id="tabDevelopers"
+                    class="px-6 py-3 rounded-xl font-medium transition-all bg-gray-800 text-gray-400 hover:bg-gray-700">
                     <i data-feather="users" class="w-4 h-4 inline mr-2"></i>Top Developers
                 </button>
             </div>
 
-            <!-- Filters -->
-            <div id="trendingFilters" class="flex flex-wrap justify-center gap-3 mb-8">
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors active" data-language="all">All</button>
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="javascript">JavaScript</button>
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="typescript">TypeScript</button>
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="python">Python</button>
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="rust">Rust</button>
-                <button class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors" data-language="go">Go</button>
+            <!-- Filters & Search -->
+            <div class="mb-12">
+                <div id="trendingFilters" class="flex flex-wrap justify-center gap-3 mb-6">
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors active"
+                        data-language="all">All</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="javascript">JavaScript</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="typescript">TypeScript</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="python">Python</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="rust">Rust</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="go">Go</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-lg bg-gray-800 text-sm font-medium hover:bg-gray-700 transition-colors"
+                        data-language="android">Android</button>
+                </div>
+
+                <div class="max-w-xl mx-auto relative group">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-10 group-hover:opacity-25 transition duration-500">
+                    </div>
+                    <form id="exploreSearchForm"
+                        class="relative flex items-center bg-gray-900 rounded-2xl border border-gray-800 p-1.5">
+                        <i data-feather="search" class="w-5 h-5 text-gray-500 ml-4"></i>
+                        <input type="text" id="exploreSearchInput" placeholder="Search for any repositories..."
+                            class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-500 px-4 py-2 text-md"
+                            autocomplete="off">
+                        <button type="submit"
+                            class="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-xl transition-all duration-300">
+                            Search
+                        </button>
+                    </form>
+                </div>
             </div>
 
             <!-- Content -->
@@ -93,7 +133,8 @@
 
             <!-- Load More -->
             <div id="exploreLoadMore" class="mt-8 text-center hidden">
-                <button id="loadMoreExplore" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-medium transition-all">
+                <button id="loadMoreExplore"
+                    class="px-8 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl font-medium transition-all">
                     Load More
                 </button>
             </div>
@@ -107,4 +148,5 @@
     <script src="explore.js"></script>
     <script>feather.replace();</script>
 </body>
+
 </html>

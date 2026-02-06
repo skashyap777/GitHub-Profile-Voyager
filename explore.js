@@ -8,8 +8,12 @@ const exploreLoading = document.getElementById('exploreLoading');
 const trendingFilters = document.getElementById('trendingFilters');
 const exploreLoadMore = document.getElementById('exploreLoadMore');
 
+const exploreSearchForm = document.getElementById('exploreSearchForm');
+const exploreSearchInput = document.getElementById('exploreSearchInput');
+
 let currentTab = 'trending';
 let currentLanguage = 'all';
+let currentSearch = '';
 let currentPage = 1;
 
 const AWESOME_TOPICS = [
@@ -28,37 +32,57 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
         e.target.classList.remove('bg-gray-800');
         e.target.classList.add('active', 'bg-primary-600', 'text-white');
         currentLanguage = e.target.dataset.language;
+        currentSearch = ''; // Clear search when using filters
+        exploreSearchInput.value = '';
+        currentPage = 1;
         loadContent();
     });
+});
+
+exploreSearchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    currentSearch = exploreSearchInput.value.trim();
+    if (currentSearch) {
+        // Reset language filter UI
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'bg-primary-600', 'text-white'));
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.add('bg-gray-800'));
+        const allBtn = document.querySelector('[data-language="all"]');
+        allBtn.classList.remove('bg-gray-800');
+        allBtn.classList.add('active', 'bg-primary-600', 'text-white');
+
+        currentLanguage = 'all';
+        currentPage = 1;
+        loadContent();
+    }
 });
 
 function switchTab(tab) {
     currentTab = tab;
     currentPage = 1;
-    
+
     // Update UI
     [tabTrending, tabAwesome, tabDevelopers].forEach(t => {
         t.classList.remove('bg-primary-600', 'text-white');
         t.classList.add('bg-gray-800', 'text-gray-400');
     });
-    
+
     const activeTab = tab === 'trending' ? tabTrending : tab === 'awesome' ? tabAwesome : tabDevelopers;
     activeTab.classList.remove('bg-gray-800', 'text-gray-400');
     activeTab.classList.add('bg-primary-600', 'text-white');
-    
+
     trendingFilters.style.display = tab === 'trending' ? 'flex' : 'none';
     exploreLoadMore.classList.add('hidden');
-    
+
     loadContent();
 }
 
 async function loadContent() {
     showLoading();
     exploreContent.innerHTML = '';
-    
+
     try {
         let items = [];
-        
+
         if (currentTab === 'trending') {
             items = await fetchTrendingRepos();
         } else if (currentTab === 'awesome') {
@@ -66,10 +90,10 @@ async function loadContent() {
         } else {
             items = await fetchTopDevelopers();
         }
-        
+
         renderItems(items);
         hideLoading();
-        
+
         if (items.length === 30) {
             exploreLoadMore.classList.remove('hidden');
         }
@@ -81,15 +105,25 @@ async function loadContent() {
 }
 
 async function fetchTrendingRepos() {
-    const date = new Date();
-    date.setDate(date.getDate() - 7);
-    const dateString = date.toISOString().split('T')[0];
-    
-    let query = `created:>${dateString} sort:stars-desc`;
-    if (currentLanguage !== 'all') {
-        query += ` language:${currentLanguage}`;
+    let query = '';
+
+    if (currentSearch) {
+        query = `${currentSearch} sort:stars-desc`;
+    } else {
+        const date = new Date();
+        date.setDate(date.getDate() - 7);
+        const dateString = date.toISOString().split('T')[0];
+        query = `created:>${dateString} sort:stars-desc`;
+
+        if (currentLanguage !== 'all') {
+            if (currentLanguage === 'android') {
+                query += ` topic:android`;
+            } else {
+                query += ` language:${currentLanguage}`;
+            }
+        }
     }
-    
+
     const response = await fetch(`${GITHUB_API_BASE}/search/repositories?q=${encodeURIComponent(query)}&per_page=30&page=${currentPage}`);
     const data = await response.json();
     return data.items || [];
@@ -106,13 +140,13 @@ async function fetchTopDevelopers() {
     // Search for developers with high follower count
     const response = await fetch(`${GITHUB_API_BASE}/search/users?q=followers:>1000+sort:followers&per_page=30&page=${currentPage}`);
     const data = await response.json();
-    
+
     // Fetch detailed info for each user
     const users = await Promise.all(data.items.map(async (user) => {
         const userResponse = await fetch(`${GITHUB_API_BASE}/users/${user.login}`);
         return userResponse.json();
     }));
-    
+
     return users;
 }
 
@@ -121,14 +155,14 @@ function renderItems(items) {
         exploreContent.innerHTML = '<p class="text-center text-gray-400 col-span-full">No results found.</p>';
         return;
     }
-    
+
     exploreContent.innerHTML = items.map((item, index) => {
         if (currentTab === 'developers') {
             return renderDeveloperCard(item, index);
         }
         return renderRepoCard(item, index);
     }).join('');
-    
+
     feather.replace();
 }
 
@@ -136,7 +170,7 @@ function renderRepoCard(repo, index) {
     const color = getLanguageColor(repo.language);
     const stars = formatNumber(repo.stargazers_count);
     const forks = formatNumber(repo.forks_count);
-    
+
     return `
         <div class="repo-card p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1 group" style="animation-delay: ${index * 50}ms">
             <div class="flex items-start justify-between mb-4">
